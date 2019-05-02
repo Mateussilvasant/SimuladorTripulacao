@@ -5,7 +5,7 @@ import com.flightsim.fsuipc.fsuipc_wrapper;
 public class FSUIPController
 {
 
-    public static OffsetResponse requestSimulatorData(int[] offset)
+    public static OffsetResponse requestData(int[] offset)
     {
 	if (offset != null)
 	{

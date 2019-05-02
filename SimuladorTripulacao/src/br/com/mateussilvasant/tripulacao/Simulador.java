@@ -24,11 +24,14 @@ public class Simulador extends Application
 	root = new StackPane();
 	root.getChildren().add(new MainMenu());
 
-	scene = new Scene(root, METRICS.getPX(0.40), METRICS.getPX(0.20));
+	scene = new Scene(root, METRICS.getPX(0.45), METRICS.getPX(0.25));
+	scene.getStylesheets()
+		.add(getClass().getResource("/br/com/mateussilvasant/tripulacao/style/styleApp.css").toExternalForm());
 
-	// stage.setAlwaysOnTop(true);
-	// stage.initStyle(StageStyle.UTILITY);
+	stage.setAlwaysOnTop(true);
 	stage.setScene(scene);
+	stage.initStyle(StageStyle.UTILITY);
+	stage.setResizable(false);
 	stage.setTitle("Simulador Tripulação");
 	stage.show();
     }

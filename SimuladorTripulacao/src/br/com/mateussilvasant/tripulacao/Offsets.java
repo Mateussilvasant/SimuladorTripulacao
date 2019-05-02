@@ -9,7 +9,11 @@ public interface Offsets
     static int[] altitude =
     { 1396, 1 };
     static int[] heading =
-    { 24632 , 2 };
-    static int[] wind = 
-	{3728, 2};
+    { 24632, 2 };
+    static int[] wind_y =
+    { 11728, 2 };
+    static int[] wind_x =
+    { 11720, 2 };
+    static int[] wind_z =
+    { 11736, 2 };
 }

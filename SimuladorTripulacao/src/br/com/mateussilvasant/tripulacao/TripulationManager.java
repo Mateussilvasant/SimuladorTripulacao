@@ -9,7 +9,7 @@ public class TripulationManager
 
     public void update()
     {
-	OffsetResponse response = FSUIPController.requestSimulatorData(Offsets.altitude);
+	OffsetResponse response = FSUIPController.requestData(Offsets.altitude);
 
 	System.out.println("PushBack State: " + response.getInt());
     }

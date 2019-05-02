@@ -1,127 +1,139 @@
 package br.com.mateussilvasant.tripulacao.menu;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import br.com.mateussilvasant.tripulacao.DatabaseTripulation;
 import br.com.mateussilvasant.tripulacao.Simulador;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
-public class FlightMenu extends StackPane
+public class FlightMenu extends FlightPane
 {
-
-    private HBox infoFlightPane;
-    private ComboBox<String> departureField;
-    private Label departureLabel;
-    private Label arrivalLabel;
-    private ComboBox<String> arrivalField;
+    private GridPane infoFlightPane;
+    private VBox verticalMenuFlight;
+    private TextField departureField;
+    private TextField arrivalField;
+    private TextField timeFlightField;
+    private TextField numberFlightField;
+    private ComboBox<String> passengerGateTimeField;
+    private TextField gateField;
 
     public FlightMenu()
     {
-	ArrayList<String> icaos = DatabaseTripulation.getListAirportNames();
+	super(0.34, 0.23);
+    }
 
+    @Override
+    public void settings()
+    {
+	background.setFill(Color.rgb(255, 255, 255));
+	setPickOnBounds(false);
+	setTranslateX(Simulador.METRICS.getX((0.077)));
+    }
+
+    @Override
+    public void initContent()
+    {
+	initFlightMenu();
+    }
+
+    public void initFlightMenu()
+    {
 	Group group = new Group();
 
-	infoFlightPane = new HBox(2);
-	departureLabel = new Label("Origem: ");
+	verticalMenuFlight = new VBox();
 
-	departureField = new ComboBox<String>();
+	infoFlightPane = new GridPane();
+	infoFlightPane.setHgap(Simulador.METRICS.getPX(0.001));
+	infoFlightPane.setVgap(Simulador.METRICS.getPX(0.005));
 
-	departureField.getItems().addAll(icaos);
-	departureField.setOnKeyPressed(new DepartureEventSearch(icaos));
-	departureField.requestFocus();
-	departureField.setEditable(true);
+	infoFlightPane.setEffect(new InnerShadow(Simulador.METRICS.getPX(0.030), Color.rgb(12, 84, 166)));
+	infoFlightPane.getStyleClass().add("infoFlightPaneStyle");
+
+	double p = Simulador.METRICS.getPX(0.008);
+	infoFlightPane.setPadding(new Insets(p, p, p, p));
+
+	Label titleMenu = new Label("Iniciar um Vôo");
+	titleMenu.setTranslateY(Simulador.METRICS.getY(-0.300));
+	titleMenu.setFont(Font.font(Simulador.METRICS.getPX(0.010)));
+
+	Label titleInfoFlight = new Label("Informações Vôo:");
+	titleInfoFlight.setFont(Font.font(Simulador.METRICS.getPX(0.007)));
+
+	Label departureLabel = new Label("Origem: ");
+	departureLabel.setFont(Font.font(Simulador.METRICS.getPX(0.006)));
+
+	Label numberFlightLabel = new Label("Número Vôo: ");
+	numberFlightLabel.setFont(Font.font(Simulador.METRICS.getPX(0.006)));
+
+	Label arrivalLabel = new Label("Destino: ");
+	arrivalLabel.setFont(Font.font(Simulador.METRICS.getPX(0.006)));
+
+	Label timeFlightLabel = new Label("Tempo de Vôo: ");
+	timeFlightLabel.setFont(Font.font(Simulador.METRICS.getPX(0.006)));
+
+	Label passengerGateTimeLabel = new Label("Tempo/Embarque: ");
+	passengerGateTimeLabel.setFont(Font.font(Simulador.METRICS.getPX(0.006)));
+
+	Label gateLabel = new Label("Portão Gate: ");
+	gateLabel.setFont(Font.font(Simulador.METRICS.getPX(0.006)));
+
+	numberFlightField = new TextField();
+	numberFlightField.setPrefWidth(Simulador.METRICS.getPX(0.03));
+
+	departureField = new TextField();
 	departureField.setPrefWidth(Simulador.METRICS.getPX(0.03));
 
-	arrivalLabel = new Label("Destino: ");
-
-	arrivalField = new ComboBox<String>();
-	arrivalField.getItems().addAll(DatabaseTripulation.getListAirportNames());
-	arrivalField.valueProperty().addListener(new ArrivalEventSearch());
-	arrivalField.setEditable(true);
+	arrivalField = new TextField();
 	arrivalField.setPrefWidth(Simulador.METRICS.getPX(0.03));
 
-	infoFlightPane.getChildren().add(departureLabel);
-	infoFlightPane.getChildren().add(departureField);
-	infoFlightPane.getChildren().add(arrivalLabel);
-	infoFlightPane.getChildren().add(arrivalField);
+	timeFlightField = new TextField();
+	timeFlightField.setPrefWidth(Simulador.METRICS.getPX(0.03));
 
-	infoFlightPane.setSpacing(Simulador.METRICS.getPX(0.005));
+	ObservableList<String> times = FXCollections.observableArrayList("01:00", "05:00", "10:00", "30:00");
+	passengerGateTimeField = new ComboBox<String>(times);
+	passengerGateTimeField.setPrefWidth(Simulador.METRICS.getPX(0.03));
+	passengerGateTimeField.setTooltip(new Tooltip("00 min : sec 00"));
 
-	double pd = Simulador.METRICS.getPX(0.40);
+	gateField = new TextField();
+	gateField.setPrefWidth(Simulador.METRICS.getPX(0.01));
 
-	infoFlightPane.setPadding(new Insets(pd, pd, pd, pd));
+	double paddingField = Simulador.METRICS.getPX(0.004);
 
-	infoFlightPane.setStyle("-fx-border-color: black");
+	GridPane.setMargin(numberFlightField, new Insets(0, paddingField, 0, paddingField));
+	GridPane.setMargin(departureField, new Insets(0, paddingField, 0, paddingField));
+	GridPane.setMargin(arrivalField, new Insets(0, paddingField, 0, paddingField));
+	GridPane.setMargin(timeFlightField, new Insets(0, paddingField, 0, paddingField));
+	GridPane.setMargin(gateField, new Insets(0, paddingField, 0, paddingField));
+	GridPane.setMargin(passengerGateTimeField, new Insets(0, paddingField, 0, paddingField - 20));
 
-	group.getChildren().add(infoFlightPane);
+	infoFlightPane.add(numberFlightLabel, 0, 0);
+	infoFlightPane.add(numberFlightField, 1, 0);
+	infoFlightPane.add(departureLabel, 2, 0);
+	infoFlightPane.add(departureField, 3, 0);
+	infoFlightPane.add(arrivalLabel, 4, 0);
+	infoFlightPane.add(arrivalField, 5, 0);
+	infoFlightPane.add(timeFlightLabel, 6, 0);
+	infoFlightPane.add(timeFlightField, 7, 0);
+	infoFlightPane.add(gateLabel, 0, 1);
+	infoFlightPane.add(gateField, 1, 1);
+	infoFlightPane.add(passengerGateTimeLabel, 2, 1);
+	infoFlightPane.add(passengerGateTimeField, 3, 1);
+
+	verticalMenuFlight.getChildren().add(titleInfoFlight);
+	verticalMenuFlight.getChildren().add(infoFlightPane);
+
+	getChildren().add(titleMenu);
+	group.getChildren().add(verticalMenuFlight);
 	getChildren().add(group);
-    }
-
-    public void show(StackPane paneRoot)
-    {
-	if (!paneRoot.getChildren().contains(this))
-	{
-	    paneRoot.getChildren().add(this);
-	}
-    }
-
-    private class DepartureEventSearch implements EventHandler<KeyEvent>
-    {
-
-	private ArrayList<String> list;
-	private ArrayList<String> filteredList;
-
-	public DepartureEventSearch(ArrayList<String> observableList)
-	{
-	    list = observableList;
-	    filteredList = new ArrayList<String>();
-	}
-
-	public void handle(KeyEvent event)
-	{
-
-	    String text = event.getCode().toString();
-
-	    Iterator<String> iterator = list.iterator();
-
-	    while (iterator.hasNext())
-	    {
-		String key = iterator.next();
-
-		if (key.contains(text))
-		{
-		    filteredList.add(key);
-		}
-
-	    }
-
-	    System.out.println("qTD: " + filteredList.size());
-
-	    departureField.getItems().addAll(filteredList);
-
-	}
-
-    }
-
-    private class ArrivalEventSearch implements ChangeListener<Object>
-    {
-
-	public void changed(ObservableValue<?> observable, Object oldValue, Object newValue)
-	{
-
-	}
-
     }
 
 }
