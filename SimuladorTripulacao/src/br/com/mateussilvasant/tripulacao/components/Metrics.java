@@ -1,4 +1,4 @@
-package br.com.mateussilvasant.tripulacao;
+package br.com.mateussilvasant.tripulacao.components;
 
 public class Metrics
 {

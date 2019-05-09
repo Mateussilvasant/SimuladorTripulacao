@@ -14,12 +14,9 @@ public abstract class FlightPane extends StackPane
     {
 	initBackground(width, height);
 	settings();
-	initContent();
     }
 
     public abstract void settings();
-
-    public abstract void initContent();
 
     public void initBackground(double width, double height)
     {

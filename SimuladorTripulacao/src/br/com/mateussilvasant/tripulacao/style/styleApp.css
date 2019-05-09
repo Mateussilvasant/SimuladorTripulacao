@@ -1,3 +1,17 @@
 .infoFlightPaneStyle{
 	-fx-background-color: #a0c9f8;	
+	-fx-background-radius: 0 20 20 20;
+	-fx-effect: innershadow(gaussian, #0c54a6, 20.0, 0.0, 0.0, 0.0);
+}
+
+.labelInfoFlight{
+	-fx-background-color: #0d0d0d;
+	-fx-text-fill: #cccccc;
+	-fx-background-radius: 10 10 0 0 ;
+	-fx-padding: 5 20 5 20;
+}
+
+.paneInfoFlight{
+	-fx-fill: #ffffff;
+	-fx-effect: dropshadow(gaussian, #f2f2f2, 5.0, 0.0, 0.0, 0.0);
 }

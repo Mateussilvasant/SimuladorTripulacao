@@ -1,6 +1,7 @@
 package br.com.mateussilvasant.tripulacao.menu;
 
 import br.com.mateussilvasant.tripulacao.Simulador;
+import br.com.mateussilvasant.tripulacao.controller.FlightController;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -15,14 +16,14 @@ public class MainMenu extends FlightPane
 {
 
     private StackPane topBar;
-    private Button buttonNewFlight;
+    public Button buttonNewFlight;
     private Button buttonManagerAircraft;
-    private FlightMenu flightMenu;
     public static Font applicationFont;
 
     public MainMenu()
     {
 	super(Simulador.METRICS.getWidth(), Simulador.METRICS.getHeight());
+	initContent();
     }
 
     @Override
@@ -32,7 +33,6 @@ public class MainMenu extends FlightPane
 	background.setFill(Color.rgb(45, 137, 239));
     }
 
-    @Override
     public void initContent()
     {
 	initBar();
@@ -49,12 +49,11 @@ public class MainMenu extends FlightPane
 
 	topBar = new StackPane();
 	topBar.getChildren().add(backgroundBar);
-	topBar.setTranslateX(Simulador.METRICS.getX(-0.270));
+	topBar.setTranslateX(Simulador.METRICS.getX(-0.286));
 
 	buttonNewFlight = new Button("Novo Vôo");
 	buttonNewFlight.setFont(Font.font(Simulador.METRICS.getPX(0.008)));
 	buttonNewFlight.setPrefWidth(Simulador.METRICS.getPX(0.09));
-	buttonNewFlight.setOnMouseClicked(new FlightMenuAction());
 
 	buttonManagerAircraft = new Button("Gerenciar Aeronaves");
 	buttonManagerAircraft.setFont(Font.font(Simulador.METRICS.getPX(0.008)));
@@ -66,24 +65,6 @@ public class MainMenu extends FlightPane
 	topBar.getChildren().add(new Group(buttons));
 
 	getChildren().add(topBar);
-    }
-
-    public class FlightMenuAction implements EventHandler<Event>
-    {
-
-	public void handle(Event arg0)
-	{
-	    if (flightMenu == null)
-	    {
-		flightMenu = new FlightMenu();
-	    }
-
-	    flightMenu.show(MainMenu.this);
-
-	    System.out.println("Teste");
-
-	}
-
     }
 
 }

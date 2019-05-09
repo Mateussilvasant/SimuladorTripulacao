@@ -48,7 +48,6 @@ public class Test extends FSUIPConnect
 	deviations[0] = x;
 	deviations[1] = y;
 	deviations[2] = z;
-	
 
 	double deviationWind = Math.sqrt(variance.evaluate(deviations));
 

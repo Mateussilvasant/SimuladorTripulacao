@@ -11,6 +11,7 @@ public class DatabaseTripulation
 
     private final static String DATABASE_AIRPORT = "/airports.json";
     private final static String URL_DATABASE_SETTINGS = "/settings.json";
+    private final static String AIRPLANES = "/airplanes.json";
 
     public static ArrayList<String> getListAirportNames()
     {
@@ -27,6 +28,24 @@ public class DatabaseTripulation
 	}
 
 	return icaos;
+    }
+
+    public static ArrayList<String> getAirplaneNames()
+    {
+
+	ArrayList<String> names = new ArrayList<>();
+	JSONArray array = DatabaseManager.getInstance().getJSONArray(AIRPLANES);
+
+	Iterator<?> iterator = array.iterator();
+
+	while (iterator.hasNext())
+	{
+	    JSONObject object = (JSONObject) iterator.next();
+	    names.add(object.get("Name").toString());
+	}
+
+	return names;
+
     }
 
 }

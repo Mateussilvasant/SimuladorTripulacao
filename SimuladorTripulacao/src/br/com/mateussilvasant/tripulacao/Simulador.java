@@ -1,5 +1,7 @@
 package br.com.mateussilvasant.tripulacao;
 
+import br.com.mateussilvasant.tripulacao.components.Metrics;
+import br.com.mateussilvasant.tripulacao.controller.FlightController;
 import br.com.mateussilvasant.tripulacao.menu.MainMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,9 +24,11 @@ public class Simulador extends Application
 		Screen.getPrimary().getVisualBounds().getHeight());
 
 	root = new StackPane();
-	root.getChildren().add(new MainMenu());
 
-	scene = new Scene(root, METRICS.getPX(0.45), METRICS.getPX(0.25));
+	FlightController controller = new FlightController();
+	root.getChildren().add(controller.mainMenu);
+
+	scene = new Scene(root, METRICS.getPX(0.47), METRICS.getPX(0.25));
 	scene.getStylesheets()
 		.add(getClass().getResource("/br/com/mateussilvasant/tripulacao/style/styleApp.css").toExternalForm());
 
